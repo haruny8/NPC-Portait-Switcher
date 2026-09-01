@@ -13,7 +13,7 @@ A SillyTavern extension for narrator, DM, and multi-NPC chats. When a user-defin
 - **Manual scan button:** Use **Scan latest messages** in the extension settings, or use the **NPC Portraits** action in SillyTavern's Extensions menu wand, to rescan the latest user and assistant messages.
 - **Desktop and mobile layouts:** Desktop uses a right-side portrait panel with an NPC avatar tray. Mobile uses a small floating portrait button so the portrait does not automatically cover the chat.
 - **Draggable mobile button:** Drag the mobile button to a more convenient location. Its position is saved and restored across viewport changes and reloads.
-- **Portrait modal:** On mobile, tap the floating button to open the portrait in a centered modal. Tap the backdrop or the close button to dismiss it. On desktop, the portrait opens in the right-side panel.
+- **Portrait modal:** On mobile, tap the floating button to open the portrait in a centered modal. Tap the backdrop or the close button to dismiss it. On desktop, scans keep the full portrait hidden until you click an NPC in the tray; the portrait then opens in the right-side panel.
 - **Zoom and pan:** Use the `−` and `+` controls, mouse-wheel zoom, or touch pinch zoom. Drag a zoomed portrait to pan it. Zoom ranges from 1× to 3× and resets when changing portraits.
 - **Portrait navigation:** Use the previous/next controls to cycle through expressions for one NPC, or through the NPCs currently in the scene when multiple NPCs are active.
 - **Keyword matching:** Matching is case-insensitive by default, uses whole-word boundaries, and supports multiple comma-separated keywords.
@@ -38,8 +38,9 @@ A SillyTavern extension for narrator, DM, and multi-NPC chats. When a user-defin
 - The forked extension scans latest user message and the latest assistant message automatically after they are rendered.
 - A scan considers the the latest assistant message and the latest user message before it. If no preceding user message exists, it scans the latest assistant message alone.
 - Each NPC entry is checked independently, so more than one NPC can be active in the same message.
-- NPC keywords are checked first. Expression keywords are then checked within each matching NPC; expressions are evaluated in the order they appear in the settings, and the first match wins.
+- NPC keywords are checked first. Expression keywords are then associated with the closest matching NPC keyword in the same sentence or line when possible; expressions are evaluated in the order they appear in the settings, and the first match wins.
 - The **Mentions needed per message** value counts whole-word occurrences of an NPC keyword in one message. Expression keywords only need one match.
+- If an expression keyword appears without a nearby NPC keyword, the closest NPC keyword in the scanned exchange is used as a fallback. Prose that gives several NPCs the same expression keyword in one sentence remains inherently ambiguous.
 - The active portrait follows the first NPC matched in the message unless you have manually selected an NPC from the tray. A manual selection stays pinned while that NPC remains in the scene.
 - Changing chats clears the active scene and closes the portrait. The saved NPC entries for each character remain available when you return.
 
@@ -48,6 +49,8 @@ A SillyTavern extension for narrator, DM, and multi-NPC chats. When a user-defin
 On screens 768px wide or narrower, automatic scans update the active NPC without opening the large portrait automatically. This keeps the chat readable while still indicating that an NPC is active.
 
 Tap the floating image button to open the current portrait. The button can be dragged, and its position is saved. Once the modal is open, its close, navigation, and zoom controls remain available without hover.
+
+On desktop, automatic scans update the active NPC and its tray highlight without opening the full portrait. Click a tray icon when you want to reveal it.
 
 ## Tips and notes
 
